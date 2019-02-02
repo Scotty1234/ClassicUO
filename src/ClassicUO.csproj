@@ -101,6 +101,7 @@
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Game\CircleOfTransparency.cs" />
+    <Compile Include="Game\Systems\GameObjectSystem.cs" />
     <Compile Include="Game\Constants.cs" />
     <Compile Include="Game\Data\Ability.cs" />
     <Compile Include="Game\Data\BuffIcon.cs" />
@@ -130,6 +131,10 @@
     <Compile Include="Game\ItemHold.cs" />
     <Compile Include="Game\Managers\MacroManager.cs" />
     <Compile Include="Game\Managers\AudioManager.cs" />
+    <Compile Include="Game\Systems\GameEffectSystem.cs" />
+    <Compile Include="Game\Systems\LandSystem.cs" />
+    <Compile Include="Game\Systems\MobileAnimationSystem.cs" />
+    <Compile Include="Game\Systems\MobileSystem.cs" />
     <Compile Include="Game\UI\AbstractEntry.cs" />
     <Compile Include="Game\UI\Controls\AbstractTextBox.cs" />
     <Compile Include="Game\UI\Controls\AlphaBlendControl.cs" />
@@ -552,5 +557,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
