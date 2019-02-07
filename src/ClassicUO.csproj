@@ -101,6 +101,27 @@
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Game\CircleOfTransparency.cs" />
+    <Compile Include="Game\Systems\Components\AlphaHueComponent.cs" />
+    <Compile Include="Game\Systems\Components\BoundsComponent.cs" />
+    <Compile Include="Game\Systems\Components\DrawComponent.cs" />
+    <Compile Include="Game\Systems\Components\DrawTransparentComponent.cs" />
+    <Compile Include="Game\Systems\Components\GraphicComponent.cs" />
+    <Compile Include="Game\Systems\Components\RealScreenPositionComponent.cs" />
+    <Compile Include="Game\Systems\Components\RotationComponent.cs" />
+    <Compile Include="Game\Systems\Components\ScreenPositionComponent.cs" />
+    <Compile Include="Game\Systems\Components\SelectedComponent.cs" />
+    <Compile Include="Game\Systems\Components\StretchedComponent.cs" />
+    <Compile Include="Game\Systems\Components\TileDataComponent.cs" />
+    <Compile Include="Game\Systems\Contexts.cs" />
+    <Compile Include="Game\Systems\GameComponentsLookup.cs" />
+    <Compile Include="Game\Systems\Components\HueComponent.cs" />
+    <Compile Include="Game\Systems\Components\PositionComponent.cs" />
+    <Compile Include="Game\Systems\Components\ShadowComponent.cs" />
+    <Compile Include="Game\Systems\Components\TextureComponent.cs" />
+    <Compile Include="Game\Systems\Components\TileComponent.cs" />
+    <Compile Include="Game\Systems\GameContext.cs" />
+    <Compile Include="Game\Systems\GameEntity.cs" />
+    <Compile Include="Game\Systems\GameEntityFactory.cs" />
     <Compile Include="Game\Systems\GameObjectSystem.cs" />
     <Compile Include="Game\Constants.cs" />
     <Compile Include="Game\Data\Ability.cs" />
@@ -132,9 +153,11 @@
     <Compile Include="Game\Managers\MacroManager.cs" />
     <Compile Include="Game\Managers\AudioManager.cs" />
     <Compile Include="Game\Systems\GameEffectSystem.cs" />
-    <Compile Include="Game\Systems\LandSystem.cs" />
+    <Compile Include="Game\Systems\ISystem.cs" />
+    <Compile Include="Game\Systems\Features\LandSystems.cs" />
     <Compile Include="Game\Systems\MobileAnimationSystem.cs" />
     <Compile Include="Game\Systems\MobileSystem.cs" />
+    <Compile Include="Game\Systems\Systems.cs" />
     <Compile Include="Game\UI\AbstractEntry.cs" />
     <Compile Include="Game\UI\Controls\AbstractTextBox.cs" />
     <Compile Include="Game\UI\Controls\AlphaBlendControl.cs" />
@@ -557,6 +580,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{a0a11cc3-8b1e-4345-a5fa-01fc60e581d8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,6 +6,8 @@ using ClassicUO.Game.Map;
 using ClassicUO.Input;
 using ClassicUO.Renderer;
 using ClassicUO.Game;
+using ClassicUO.Utility;
+using ClassicUO.Game.GameObjects;
 
 namespace ClassicUO.Systems
 {
@@ -14,6 +16,7 @@ namespace ClassicUO.Systems
         public Position Position;
         public Vector3 Offset;
         public Tile Tile;
+        public Deque<TextOverhead> OverHeads;
         //public GameObjectDataComponent Left;
         //public GameObjectDataComponent Right;
         public Vector3 ScreenPosition;
@@ -52,9 +55,10 @@ namespace ClassicUO.Systems
 
     sealed class GameObjectSystem
     {
-        GameObjectView[] gameObjectViews;
-        GameObjectDataComponent[] data;
-        int _numComponents;
+        GameObjectView[]            gameObjectViews;
+        GameObjectDataComponent[]   data;
+
+        int                         _numComponents;
 
         public GameObjectSystem(int size)
         {
@@ -181,7 +185,13 @@ namespace ClassicUO.Systems
 
         public void Update(double totalMS, double frameMS)
         {
-
+            //for(int i = 0; i < _numComponents; i++)
+            //{
+            //    for(int j = 0; j < data[i].OverHeads.Count; j++)
+            //    {
+            //        data[i].OverHeads[j].Update(totalMS, frameMS)
+            //    }
+            //}
         }
 
         public int Distance(Position position)
