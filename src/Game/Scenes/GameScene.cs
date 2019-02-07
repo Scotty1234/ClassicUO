@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 
 using ClassicUO.Configuration;
 using ClassicUO.Game.GameObjects;
@@ -49,6 +50,8 @@ namespace ClassicUO.Game.Scenes
         private WorldViewport _viewPortGump;
         private JournalManager _journalManager;
         private OverheadManager _overheadManager;
+        private HotkeysManager _hotkeysManager;
+        private MacroManager _macroManager;
         private GameObject _selectedObject;
         private UseItemQueue _useItemQueue = new UseItemQueue();
         private float _scale = 1;
@@ -70,6 +73,10 @@ namespace ClassicUO.Game.Scenes
                 _scale = value;              
             }
         }
+
+        public HotkeysManager Hotkeys => _hotkeysManager;
+
+        public MacroManager Macros => _macroManager;
 
         public Texture2D ViewportTexture => _renderTarget;
 
@@ -125,7 +132,8 @@ namespace ClassicUO.Game.Scenes
             HeldItem = new ItemHold();
             _journalManager = new JournalManager();
             _overheadManager = new OverheadManager();
-
+            _hotkeysManager = new HotkeysManager();
+            _macroManager = new MacroManager(Engine.Profile.Current.Macros);
             _mousePicker = new MousePicker();
             _mouseOverList = new MouseOverList(_mousePicker);
 
@@ -303,15 +311,16 @@ namespace ClassicUO.Game.Scenes
             _overheadManager = null;
             _useItemQueue.Clear();
             _useItemQueue = null;
-
+            _hotkeysManager = null;
+            _macroManager = null;
             Chat.Message -= ChatOnMessage;
 
             base.Unload();
         }
 
-        private void SocketOnDisconnected(object sender, EventArgs e)
+        private void SocketOnDisconnected(object sender, SocketError e)
         {
-            Engine.UI.Add(new MessageBoxGump(200, 125, "Connection lost", (s) =>
+            Engine.UI.Add(new MessageBoxGump(200, 200, $"Connection lost:\n{e}", (s) =>
             {         
                 if (s)
                     Engine.SceneManager.ChangeScene(ScenesType.Login);
@@ -320,6 +329,16 @@ namespace ClassicUO.Game.Scenes
 
         private bool _alphaChanged;
         private long _alphaTimer;
+
+
+        public void RequestQuitGame()
+        {
+            Engine.UI.Add(new QuestionGump("Quit\nUltima Online?", s =>
+            {
+                if (s)
+                    Engine.SceneManager.ChangeScene(ScenesType.Login);
+            }));
+        }
 
         public override void FixedUpdate(double totalMS, double frameMS)
         {

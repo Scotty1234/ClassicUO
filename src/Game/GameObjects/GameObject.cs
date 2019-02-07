@@ -185,6 +185,15 @@ namespace ClassicUO.Game.GameObjects
                 _tile?.AddGameObject(this);
             }
         }
+
+        public void RemoveFromTile()
+        {
+            if (World.Map != null && _tile != null)
+            {
+                _tile?.RemoveGameObject(this);
+                _tile = null;
+            }
+        }
       
 
         public event EventHandler Disposed, OverheadAdded;
@@ -241,7 +250,7 @@ namespace ClassicUO.Game.GameObjects
             {
                 TextOverhead over = _overHeads[_overHeads.Count - 1];
 
-                if (over.MessageType != MessageType.Spell && over.MessageType != MessageType.Label)
+                //if (over.MessageType != MessageType.Spell && over.MessageType != MessageType.Label)
                 {
                     _overHeads.RemoveFromBack().Dispose();
                 }
