@@ -12,6 +12,8 @@ namespace ClassicUO.Game.Systems
         public const int DrawTransparent = 4;
         public const int Graphic = -1;
         public const int Hue = 1;
+        public const int Index = -1;
+        public const int Normals = -1;
         public const int Position = 0;
         public const int RealScreenPosition = -1;
         public const int ScreenPosition = -1;
@@ -20,6 +22,7 @@ namespace ClassicUO.Game.Systems
         public const int Texture = -1;
         public const int Tile = -1;
         public const int TileData = -1;
+        public const int Vertices = -1;
 
         public const int TotalComponents = 10;
 

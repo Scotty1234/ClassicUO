@@ -8,8 +8,10 @@ namespace ClassicUO.Game.Systems
         {
             GameEntity e = CreateBaseGameObjectEntity();
 
+            e.CreateComponent<NormalsComponent>(GameComponentsLookup.Normals);
             e.CreateComponent<StretchedComponent>(GameComponentsLookup.Stretched);
             e.CreateComponent<TileDataComponent>(GameComponentsLookup.TileData);
+            e.CreateComponent<VerticesComponent>(GameComponentsLookup.Vertices);
 
             GraphicComponent graphicComponent = e.GetComponent(GameComponentsLookup.Graphic) as GraphicComponent;
             graphicComponent.Graphic = graphic;
@@ -28,6 +30,20 @@ namespace ClassicUO.Game.Systems
         public static GameEntity CreateMobileEntity()
         {
             GameEntity e = CreateBaseGameObjectEntity();
+            return e;
+        }
+
+        public static GameEntity CreateStaticEntity(Graphic graphic, Hue hue, int index)
+        {
+            GameEntity e = CreateBaseGameObjectEntity();
+
+            GraphicComponent graphicComponent = e.GetComponent(GameComponentsLookup.Graphic) as GraphicComponent;
+            graphicComponent.Graphic = graphic;
+
+            HueComponent hueComponent = e.GetComponent(GameComponentsLookup.Hue) as HueComponent;
+            hueComponent.Hue = hue;
+
+
             return e;
         }
 
