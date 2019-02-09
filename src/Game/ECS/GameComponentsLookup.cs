@@ -6,13 +6,14 @@ namespace ClassicUO.Game.Systems
 {
     internal static class GameComponentsLookup
     {
-        public const int AlphaHue = 2;
-        public const int Bounds = 3;
-        public const int Draw = -1;
-        public const int DrawTransparent = 4;
-        public const int Graphic = -1;
-        public const int Hue = 1;
-        public const int Index = -1;
+        public const int AlphaHue = 0;
+        public const int Bounds = 1;
+        public const int Draw = 2;
+        public const int DrawTransparent = 3;
+        public const int Graphic = 4;
+        public const int Hue = 5;
+        public const int Index = 6;
+        public const int Land = 7;
         public const int Normals = -1;
         public const int Position = 0;
         public const int RealScreenPosition = -1;
@@ -24,7 +25,7 @@ namespace ClassicUO.Game.Systems
         public const int TileData = -1;
         public const int Vertices = -1;
 
-        public const int TotalComponents = 10;
+        public const int TotalComponents = 17;
 
         public static readonly string[] ComponentNames =
         {
@@ -33,6 +34,7 @@ namespace ClassicUO.Game.Systems
             "DrawTransparent",
             "Graphic",
             "Hue",
+            "Land",
             "Position",
             "Shadow",
             "Texture",
@@ -45,6 +47,7 @@ namespace ClassicUO.Game.Systems
             typeof(DrawTransparentComponent),
             typeof(GraphicComponent),
             typeof(HueComponent),
+            typeof(LandComponent),
             typeof(PositionComponent),
         };
     }

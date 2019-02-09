@@ -4,9 +4,18 @@ namespace ClassicUO.Game.Systems
 {
     class GameEntityFactory
     {
+        public static GameEntity CreateChunkEntity(ushort x, ushort y)
+        {
+            GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
+
+            return e;
+        }
+
         public static GameEntity CreateLandEntity(Graphic graphic)
         {
             GameEntity e = CreateBaseGameObjectEntity();
+
+            e.CreateComponent<LandComponent>(GameComponentsLookup.Land);
 
             e.CreateComponent<NormalsComponent>(GameComponentsLookup.Normals);
             e.CreateComponent<StretchedComponent>(GameComponentsLookup.Stretched);
@@ -43,6 +52,12 @@ namespace ClassicUO.Game.Systems
             HueComponent hueComponent = e.GetComponent(GameComponentsLookup.Hue) as HueComponent;
             hueComponent.Hue = hue;
 
+            return e;
+        }
+
+        public static GameEntity CreateTileEntity(ushort x, ushort y)
+        {
+            GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
 
             return e;
         }
