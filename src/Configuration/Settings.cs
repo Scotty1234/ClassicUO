@@ -66,11 +66,14 @@ namespace ClassicUO.Configuration
 
         [JsonProperty(PropertyName = "autologin")] public bool AutoLogin { get; set; } = false;
 
+        [JsonProperty(PropertyName = "reconnect")] public bool Reconnect { get; set; } = false;
+        [JsonProperty(PropertyName = "reconnect_time")] public int ReconnectTime { get; set; } = 0;
+
         [JsonProperty(PropertyName = "login_music")]
         public bool LoginMusic { get; set; } = true;
 
         [JsonProperty(PropertyName = "login_music_volume")]
-        public int LoginMusicVolume { get; set; } = 100;
+        public int LoginMusicVolume { get; set; } = 70;
 
         [JsonProperty(PropertyName = "shard_type")]
         public int ShardType { get; set; } = 0; // 0 = normal (no customization), 1 = old, 2 = outlands??
