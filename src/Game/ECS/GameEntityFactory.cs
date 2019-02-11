@@ -1,4 +1,6 @@
-﻿using ClassicUO.Game.Systems.Components;
+﻿using ClassicUO.Game.ECS.Components;
+using ClassicUO.Game.Systems.Components;
+using Entitas;
 
 namespace ClassicUO.Game.Systems
 {
@@ -8,10 +10,29 @@ namespace ClassicUO.Game.Systems
         {
             GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
 
+            ChunkComponent chunkComponent = e.CreateComponent<ChunkComponent>(GameComponentsLookup.Chunk);
+            //chunkComponent.Tiles = new int[8, 8];
+
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    for (int j = 0; j < 8; j++)
+            //    {
+            //        chunkComponent.Tiles[i, j] = CreateTileEntity((ushort)(x + i), (ushort)(y + j)).;
+
+            //    }
+            //}
+
+            e.AddComponent(GameComponentsLookup.Chunk, chunkComponent);
+
+            Position2DComponent position2DComponent = e.CreateComponent<Position2DComponent>(GameComponentsLookup.Position2D);
+            position2DComponent.X = x;
+            position2DComponent.Y = y;
+            e.AddComponent(GameComponentsLookup.Position2D, position2DComponent);
+
             return e;
         }
 
-        public static GameEntity CreateLandEntity(Graphic graphic)
+        public static GameEntity CreateLandEntity(Graphic graphic, sbyte height)
         {
             GameEntity e = CreateBaseGameObjectEntity();
 
@@ -33,12 +54,25 @@ namespace ClassicUO.Game.Systems
             AlphaHueComponent alphaHueComponent = e.GetComponent(GameComponentsLookup.AlphaHue) as AlphaHueComponent;
             alphaHueComponent.AlphaHue = 255;
 
+            HeightComponent heightComponent = e.CreateComponent<HeightComponent>(GameComponentsLookup.Height);
+            heightComponent.Average = height;
+            heightComponent.Minimum = height;
+
+
             return e;
         }
 
         public static GameEntity CreateMobileEntity()
         {
             GameEntity e = CreateBaseGameObjectEntity();
+            return e;
+        }
+
+        public static GameEntity CreatePlayerEntity()
+        {
+            GameEntity e = CreateMobileEntity();
+            e.CreateAndAddComponent<PlayerComponent>(GameComponentsLookup.Player);
+
             return e;
         }
 
@@ -59,6 +93,12 @@ namespace ClassicUO.Game.Systems
         {
             GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
 
+            Position2DComponent position2DComponent = e.CreateComponent<Position2DComponent>(GameComponentsLookup.Position2D);
+            position2DComponent.X = x;
+            position2DComponent.Y = y;
+
+            e.AddComponent(GameComponentsLookup.Position2D, position2DComponent);
+
             return e;
         }
 
@@ -66,16 +106,18 @@ namespace ClassicUO.Game.Systems
         {
             GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
 
-            e.CreateComponent<BoundsComponent>(GameComponentsLookup.Bounds);
-            e.CreateComponent<DrawComponent>(GameComponentsLookup.Draw);
-            e.CreateComponent<GraphicComponent>(GameComponentsLookup.Graphic);
-            e.CreateComponent<HueComponent>(GameComponentsLookup.Hue);
-            e.CreateComponent<PositionComponent>(GameComponentsLookup.Position);
-            e.CreateComponent<RealScreenPositionComponent>(GameComponentsLookup.RealScreenPosition);
-            e.CreateComponent<ScreenPositionComponent>(GameComponentsLookup.ScreenPosition);
-            e.CreateComponent<TileComponent>(GameComponentsLookup.Tile);
+            e.CreateAndAddComponent<BoundsComponent>(GameComponentsLookup.Bounds);
+            e.CreateAndAddComponent<DrawComponent>(GameComponentsLookup.Draw);
+            e.CreateAndAddComponent<GraphicComponent>(GameComponentsLookup.Graphic);
+            e.CreateAndAddComponent<HueComponent>(GameComponentsLookup.Hue);
+            e.CreateAndAddComponent<PositionComponent>(GameComponentsLookup.Position);
+            e.CreateAndAddComponent<RealScreenPositionComponent>(GameComponentsLookup.RealScreenPosition);
+            e.CreateAndAddComponent<ScreenPositionComponent>(GameComponentsLookup.ScreenPosition);
+            e.CreateAndAddComponent<TileComponent>(GameComponentsLookup.Tile);
 
             return e;
         }
+
+
     }
 }

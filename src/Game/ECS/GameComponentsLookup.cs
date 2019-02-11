@@ -1,5 +1,6 @@
 ﻿using System;
 
+using ClassicUO.Game.ECS.Components;
 using ClassicUO.Game.Systems.Components;
 
 namespace ClassicUO.Game.Systems
@@ -8,15 +9,23 @@ namespace ClassicUO.Game.Systems
     {
         public const int AlphaHue = 0;
         public const int Bounds = 1;
+        public const int Chunk = 1;
         public const int Draw = 2;
         public const int DrawTransparent = 3;
         public const int Graphic = 4;
+        public const int Height = -1;
         public const int Hue = 5;
         public const int Index = 6;
+        public const int Item = 6;
         public const int Land = 7;
+        public const int Map = -1;
+        public const int Mobile = -1;
         public const int Normals = -1;
+        public const int Player = 0;
         public const int Position = 0;
+        public const int Position2D = 0;
         public const int RealScreenPosition = -1;
+        public const int Rectangle = -1;
         public const int ScreenPosition = -1;
         public const int Shadow = 0;
         public const int Stretched = -1;
@@ -25,7 +34,7 @@ namespace ClassicUO.Game.Systems
         public const int TileData = -1;
         public const int Vertices = -1;
 
-        public const int TotalComponents = 17;
+        public const int TotalComponents = 18;
 
         public static readonly string[] ComponentNames =
         {
@@ -33,6 +42,7 @@ namespace ClassicUO.Game.Systems
             "Bounds",
             "DrawTransparent",
             "Graphic",
+            "Height",
             "Hue",
             "Land",
             "Position",

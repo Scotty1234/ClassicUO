@@ -1,6 +1,7 @@
-﻿using Entitas;
+﻿using ClassicUO.Game.Systems;
+using Entitas;
 
-namespace ClassicUO.Game.Systems.Components
+namespace ClassicUO.Game.ECS.Components
 {
     internal sealed class LandComponent : IComponent
     {
