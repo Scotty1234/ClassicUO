@@ -64,25 +64,6 @@ namespace ClassicUO
         }
     }
 
-    //internal class Window
-    //{
-    //    private Engine _engine;
-
-    //    public Window(Engine engine)
-    //    {
-    //        _engine = engine;
-    //    }
-
-    //    public int X
-    //    {
-    //        get => _engine.Window.ClientBounds.X;
-    //        set
-    //        {
-    //            _engine.Window.
-    //        }
-    //    }
-    //}
-
     internal class Engine : Microsoft.Xna.Framework.Game
     { 
         private const int MIN_FPS = 15;
@@ -101,16 +82,17 @@ namespace ClassicUO
         private float _time;
         private int _totalFrames;
         private UIManager _uiManager;
-        private Settings _settings;
+        private readonly Settings _settings;
         private DebugInfo _debugInfo;
         private bool _isRunningSlowly;
         private bool _isMaximized;
+        private bool _isHighDPI;
 
         public bool IsQuitted { get; private set; }
 
-        private Engine()
+        private Engine(Settings settings)
         {
-            _settings = ConfigurationResolver.Load<Settings>(Path.Combine(ExePath, "settings.json"));
+            _settings = settings ?? ConfigurationResolver.Load<Settings>(Path.Combine(ExePath, "settings.json"));
 
             if (_settings == null)
             {
@@ -134,10 +116,21 @@ namespace ClassicUO
             _graphicDeviceManager.SynchronizeWithVerticalRetrace = false;
             _graphicDeviceManager.ApplyChanges();
 
+            _isHighDPI = Environment.GetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI") == "1";
+
             Window.ClientSizeChanged += (sender, e) =>
             {
-                _graphicDeviceManager.PreferredBackBufferWidth = Window.ClientBounds.Width;
-                _graphicDeviceManager.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                int width = Window.ClientBounds.Width;
+                int height = Window.ClientBounds.Height;
+
+                if (_isHighDPI)
+                {
+                    width *= 2;
+                    height *= 2;
+                }
+
+                _graphicDeviceManager.PreferredBackBufferWidth = width;
+                _graphicDeviceManager.PreferredBackBufferHeight = height;
                 _graphicDeviceManager.ApplyChanges();
 
                 WorldViewportGump gump = _uiManager.GetByLocalSerial<WorldViewportGump>();
@@ -173,7 +166,7 @@ namespace ClassicUO
             }
         }
 
-        public static Version Version { get; } = new Version(0, 0, 1, 0);
+        public static Version Version { get; } = new Version(0, 0, 1, 1);
 
         public static int CurrentFPS { get; private set; }
 
@@ -254,87 +247,107 @@ namespace ClassicUO
         private static void Main(string[] args)
         {
             Configure();
-
-
-            Console.WriteLine(args);
-            
-            ArgsParser(args);
-
-            using (_engine = new Engine())
+                      
+            using (_engine = new Engine(ArgsParser(args)))
             {
                 if (!_engine.IsQuitted)
                     _engine.Run();
             }
         }
 
-        private static void ArgsParser(string[] args)
+        private static Settings ArgsParser(string[] args)
         {
-            for (int i = 0; i < args.Length - 1; i += 2)
+            Settings settings = null;
+
+            if (args.Length > 1)
             {
-                string cmd = args[i].ToLower();
+                settings = new Settings();
 
-                if (cmd.Length <= 1 && cmd[0] != '-')
-                    continue;
-
-                cmd = cmd.Remove(0, 1);
-                string value = args[i + 1];
-
-                Console.WriteLine("ARG: {0}, VALUE: {1}", cmd, value);
-
-                switch (cmd)
+                for (int i = 0; i < args.Length - 1; i += 2)
                 {
-                    case "uopath":
-                        GlobalSettings.UltimaOnlineDirectory = value;
-                        break;
-                    case "ip":
-                        GlobalSettings.IP = value;
-                        break;
-                    case "port":
-                        GlobalSettings.Port = ushort.Parse(value);
-                        break;
-                    case "username":
-                        GlobalSettings.Username = value;
-                        break;
-                    case "password":
-                        GlobalSettings.Password = value;
-                        break;
-                    case "clientversion":
-                        GlobalSettings.ClientVersion = value;
-                        break;
-                    case "lastcharname":
-                        GlobalSettings.LastCharacterName = value;
-                        break;
-                    case "fps":
-                        GlobalSettings.MaxLoginFPS = int.Parse(value);
-                        break;
-                    case "debug":
-                        GlobalSettings.Debug = bool.Parse(value);
-                        break;
-                    case "profiler":
-                        GlobalSettings.Profiler = bool.Parse(value);
-                        break;
-                    case "saveaccount":
-                        GlobalSettings.SaveAccount = bool.Parse(value);
-                        break;
-                    case "autologin":
-                        GlobalSettings.AutoLogin = bool.Parse(value);
-                        break;
-                    case "music":
-                        GlobalSettings.LoginMusic = bool.Parse(value);
-                        break;
-                    case "music_volume":
-                        GlobalSettings.LoginMusicVolume = int.Parse(value);
-                        break;
-                    case "shard":
-                        GlobalSettings.ShardType = int.Parse(value);
-                        break;
-                    case "fixed_time_step":
-                        GlobalSettings.FixedTimeStep = bool.Parse(value);
-                        break;
-                    
-                }
+                    string cmd = args[i].ToLower();
 
+                    if (cmd.Length <= 1 && cmd[0] != '-')
+                        continue;
+
+                    cmd = cmd.Remove(0, 1);
+                    string value = args[i + 1];
+
+                    Log.Message(LogTypes.Trace, $"ARG: {cmd}, VALUE: {value}");
+
+                    switch (cmd)
+                    {
+                        case "uopath":
+                            settings.UltimaOnlineDirectory = value;
+
+                            break;
+                        case "ip":
+                            settings.IP = value;
+
+                            break;
+                        case "port":
+                            settings.Port = ushort.Parse(value);
+
+                            break;
+                        case "username":
+                            settings.Username = value;
+
+                            break;
+                        case "password":
+                            settings.Password = Crypter.Encrypt(value);
+
+                            break;
+                        case "clientversion":
+                            settings.ClientVersion = value;
+
+                            break;
+                        case "lastcharname":
+                            settings.LastCharacterName = value;
+
+                            break;
+                        case "fps":
+                            settings.MaxLoginFPS = int.Parse(value);
+
+                            break;
+                        case "debug":
+                            settings.Debug = bool.Parse(value);
+
+                            break;
+                        case "profiler":
+                            settings.Profiler = bool.Parse(value);
+
+                            break;
+                        case "saveaccount":
+                            settings.SaveAccount = bool.Parse(value);
+
+                            break;
+                        case "autologin":
+                            settings.AutoLogin = bool.Parse(value);
+
+                            break;
+                        case "music":
+                            settings.LoginMusic = bool.Parse(value);
+
+                            break;
+                        case "music_volume":
+                            settings.LoginMusicVolume = int.Parse(value);
+
+                            break;
+                        case "shard":
+                            settings.ShardType = int.Parse(value);
+
+                            break;
+                        case "fixed_time_step":
+                            settings.FixedTimeStep = bool.Parse(value);
+
+                            break;
+
+                    }
+
+                }
             }
+
+            return settings;
         }
 
         public static void Quit()

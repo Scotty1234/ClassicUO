@@ -205,7 +205,7 @@ namespace ClassicUO.Network
 
         private static void TargetCursor(Packet p)
         {
-            TargetManager.SetTargeting((TargetType)p.ReadByte(), p.ReadUInt(), p.ReadByte());
+            TargetManager.SetTargeting((CursorTarget)p.ReadByte(), p.ReadUInt(), (TargetType)p.ReadByte());
 
             if (World.Party.PartyHealTimer < Engine.Ticks && World.Party.PartyHealTarget != 0)
             {
@@ -1030,6 +1030,9 @@ namespace ClassicUO.Network
             if (action != 1)
             {
                 Engine.SceneManager.CurrentScene.Audio.PlayMusic(42);
+
+                if (Engine.Profile.Current.EnableDeathScreen)
+                    World.Player.DeathScreenTimer = Engine.Ticks + Constants.DEATH_SCREEN_TIMER;
 
                 GameActions.SetWarMode(false);
             }
