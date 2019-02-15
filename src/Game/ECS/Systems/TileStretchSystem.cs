@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ClassicUO.Game.ECS.Components;
-using ClassicUO.Game.Systems.Components;
-using ClassicUO.IO;
+
 using Entitas;
 
-namespace ClassicUO.Game.Systems
+using ClassicUO.Game.ECS.Components;
+using ClassicUO.IO;
+
+namespace ClassicUO.Game.ECS
 {
     internal class TileStretchSystem : ReactiveSystem<GameEntity>
     {

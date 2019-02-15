@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
     internal partial class Contexts : IContexts
     {

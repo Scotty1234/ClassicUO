@@ -1,10 +1,11 @@
-﻿using ClassicUO.Game.Map;
-using ClassicUO.Game.Systems;
+﻿using System.Collections.Generic;
+
 using Entitas;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
-namespace ClassicUO.Game.ECS.Components
+using ClassicUO.Game.Map;
+
+namespace ClassicUO.Game.ECS
 {
     internal sealed class MapComponent : IComponent
     {
@@ -14,6 +15,24 @@ namespace ClassicUO.Game.ECS.Components
         public Chunk[] Chunks;
         public int MapBlockIndex;
         public Point Center;
+    }
+
+    internal partial class GameEntity
+    {
+        public void AddMap()
+        {
+            var component = CreateComponent<MapComponent>(GameComponentsLookup.Map);
+            AddComponent(GameComponentsLookup.Map, component);
+        }
+
+        public bool HasMap => HasComponent(GameComponentsLookup.Map);
+        public MapComponent Map => (GetComponent(GameComponentsLookup.Map) as MapComponent);
+
+        public void RemoveMap()
+        {
+            RemoveComponent(GameComponentsLookup.Map);
+        }
+
     }
 
     internal sealed partial class GameMatcher

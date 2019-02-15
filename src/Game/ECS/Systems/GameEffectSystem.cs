@@ -1,5 +1,5 @@
 ﻿
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
     public struct GameEffect
     {

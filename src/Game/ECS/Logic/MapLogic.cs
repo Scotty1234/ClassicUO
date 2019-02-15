@@ -1,6 +1,6 @@
 ﻿using ClassicUO.Game.ECS.Components;
 using ClassicUO.Game.Map;
-using ClassicUO.Game.Systems;
+using ClassicUO.Game.ECS;
 using ClassicUO.IO;
 
 namespace ClassicUO.Game.ECS.Logic

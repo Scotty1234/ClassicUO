@@ -1,14 +1,14 @@
 ﻿using System;
 
 using ClassicUO.Game.ECS.Components;
-using ClassicUO.Game.Systems.Components;
 
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
     internal static class GameComponentsLookup
     {
         public const int AlphaHue = 0;
         public const int Bounds = 1;
+        public const int Center = 1;
         public const int Chunk = 1;
         public const int Draw = 2;
         public const int DrawTransparent = 3;
@@ -19,6 +19,7 @@ namespace ClassicUO.Game.Systems
         public const int Item = 6;
         public const int Land = 7;
         public const int Map = -1;
+        public const int MapIndex = -1;
         public const int Mobile = -1;
         public const int Normals = -1;
         public const int Player = 0;
@@ -32,6 +33,7 @@ namespace ClassicUO.Game.Systems
         public const int Texture = -1;
         public const int Tile = -1;
         public const int TileData = -1;
+        public const int World = -1;
         public const int Vertices = -1;
 
         public const int TotalComponents = 18;

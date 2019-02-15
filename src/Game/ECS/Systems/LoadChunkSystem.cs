@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
     internal sealed class LoadChunkSystem : ReactiveSystem<GameEntity>
     {

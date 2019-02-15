@@ -1,5 +1,5 @@
 ﻿
-namespace ClassicUO.Game.Systems.Features
+namespace ClassicUO.Game.ECS.Features
 {
     //internal class LandSystems : Feature
     //{

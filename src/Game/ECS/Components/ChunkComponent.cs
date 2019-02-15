@@ -1,4 +1,4 @@
-﻿using ClassicUO.Game.Systems;
+﻿using ClassicUO.Game.ECS;
 using Entitas;
 
 namespace ClassicUO.Game.ECS.Components

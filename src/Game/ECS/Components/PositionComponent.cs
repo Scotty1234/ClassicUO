@@ -1,12 +1,28 @@
 ﻿using Entitas;
 
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
-    public class PositionComponent : IComponent
+    internal sealed class PositionComponent : IComponent
     {
-        public ushort X;
-        public ushort Y;
-        public sbyte Z;
+        public ushort   X;
+        public ushort   Y;
+        public sbyte    Z;
+    }
+
+    internal sealed partial class GameEntity
+    {
+        public PositionComponent Position
+        {
+            get
+            {
+                return (GetComponent(GameComponentsLookup.Position) as PositionComponent);
+            }
+            set
+            {
+                ReplaceComponent(GameComponentsLookup.Position, value);
+            }
+        }
+
     }
 
 }

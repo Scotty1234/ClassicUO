@@ -1,5 +1,5 @@
 ﻿using ClassicUO.Game.ECS.Components;
-using ClassicUO.Game.Systems;
+using ClassicUO.Game.ECS;
 using Entitas;
 
 namespace ClassicUO.Game.ECS.Systems

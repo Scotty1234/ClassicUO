@@ -1,8 +1,6 @@
 ﻿using ClassicUO.Game.ECS.Components;
-using ClassicUO.Game.Systems.Components;
-using Entitas;
 
-namespace ClassicUO.Game.Systems
+namespace ClassicUO.Game.ECS
 {
     class GameEntityFactory
     {
@@ -80,8 +78,7 @@ namespace ClassicUO.Game.Systems
         {
             GameEntity e = CreateBaseGameObjectEntity();
 
-            GraphicComponent graphicComponent = e.GetComponent(GameComponentsLookup.Graphic) as GraphicComponent;
-            graphicComponent.Graphic = graphic;
+            e.ReplaceGraphic(graphic);
 
             HueComponent hueComponent = e.GetComponent(GameComponentsLookup.Hue) as HueComponent;
             hueComponent.Hue = hue;

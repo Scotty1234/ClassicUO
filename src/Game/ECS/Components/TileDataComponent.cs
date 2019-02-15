@@ -1,7 +1,7 @@
 ﻿using ClassicUO.IO.Resources;
 using Entitas;
 
-namespace ClassicUO.Game.Systems.Components
+namespace ClassicUO.Game.ECS.Components
 {
     internal sealed class TileDataComponent : IComponent
     {

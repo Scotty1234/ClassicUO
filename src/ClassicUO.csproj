@@ -116,7 +116,7 @@
     <Compile Include="Game\ECS\Components\NameComponent.cs" />
     <Compile Include="Game\ECS\Components\NormalsComponent.cs" />
     <Compile Include="Game\ECS\Components\PartialHueComponent.cs" />
-    <Compile Include="Game\ECS\Components\PlayerComponent.cs" />
+    <Compile Include="Game\ECS\Components\Player\PlayerComponent.cs" />
     <Compile Include="Game\ECS\Components\Position2DComponent.cs" />
     <Compile Include="Game\ECS\Components\RealScreenPositionComponent.cs" />
     <Compile Include="Game\ECS\Components\RectangleComponent.cs" />
@@ -128,6 +128,8 @@
     <Compile Include="Game\ECS\Components\VerticesComponent.cs" />
     <Compile Include="Game\ECS\Components\ViewComponent.cs" />
     <Compile Include="Game\ECS\Components\WorldComponent.cs" />
+    <Compile Include="Game\ECS\Components\World\CenterComponent.cs" />
+    <Compile Include="Game\ECS\Components\World\MapIndexComponent.cs" />
     <Compile Include="Game\ECS\Contexts.cs" />
     <Compile Include="Game\ECS\Features\ViewSystems.cs" />
     <Compile Include="Game\ECS\GameComponentsLookup.cs" />
@@ -167,8 +169,8 @@
     <Compile Include="Game\Data\SpellsNinjitsu.cs" />
     <Compile Include="Game\Data\SpellsSpellweaving.cs" />
     <Compile Include="Game\Data\StaticFilters.cs" />
-    <Compile Include="Game\ECS\Systems\Initialisation\GameInitialiseSystem.cs" />
-    <Compile Include="Game\ECS\Systems\MapInitialisationSystem.cs" />
+    <Compile Include="Game\ECS\Systems\GameSystem.cs" />
+    <Compile Include="Game\ECS\Systems\MapIndexSystem.cs" />
     <Compile Include="Game\ECS\Systems\WorldUpdateSystem.cs" />
     <Compile Include="Game\GameObjects\Land.cs" />
     <Compile Include="Game\ItemHold.cs" />
@@ -176,7 +178,6 @@
     <Compile Include="Game\Managers\MacroManager.cs" />
     <Compile Include="Game\Managers\AudioManager.cs" />
     <Compile Include="Game\ECS\Systems\GameEffectSystem.cs" />
-    <Compile Include="Game\ECS\Systems\ISystem.cs" />
     <Compile Include="Game\ECS\Features\LandSystems.cs" />
     <Compile Include="Game\ECS\Systems\LoadChunkSystem.cs" />
     <Compile Include="Game\ECS\Systems\MobileAnimationSystem.cs" />
@@ -617,6 +618,10 @@
       <Project>{a0a11cc3-8b1e-4345-a5fa-01fc60e581d8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game\ECS\Components\Map\" />
+    <Folder Include="Game\ECS\Systems\Initialisation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
