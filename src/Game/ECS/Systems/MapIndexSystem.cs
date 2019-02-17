@@ -29,10 +29,10 @@ namespace ClassicUO.Game.ECS
             }
 
             GameEntity playerEntity = Contexts.SharedInstance.Game.PlayerEntity;
+            PositionComponent position = playerEntity.Position;
 
             if (worldEntity.HasMap)
             {
-                PositionComponent position = playerEntity.Position;
 
                 worldEntity.ReplaceCenter(new Point(position.X, position.Y));
                 Initialise(worldEntity);
@@ -44,6 +44,12 @@ namespace ClassicUO.Game.ECS
             else
             {
                 worldEntity.AddMap();
+
+                if (playerEntity != null)
+                {
+                    worldEntity.ReplaceCenter(new Point(position.X, position.Y));
+                }
+
                 Initialise(worldEntity);
             }
         }
@@ -98,23 +104,26 @@ namespace ClassicUO.Game.ECS
                 for (int j = minBlockY; j <= maxBlockY; j++)
                 {
                     int cellindex = blockIndex + j;
-                   // ref Chunk chunk = ref mapComponent.Chunks[cellindex];
 
-                   //// Contexts.SharedInstance.Game.Get
+                    GameEntity chunkEntity =  Contexts.SharedInstance.Game.GetEntityWithId(e.Chunks[cellindex]);
 
-                   // if (chunk == null)
-                   // {
-                   //     if (Engine.Ticks - tick >= maxDelay)
-                   //         return;
-                   //     mapComponent.UsedIndices.Add(cellindex);
-                   //     chunk = new Chunk((ushort)i, (ushort)j);
+                    if (chunkEntity == null)
+                    {
+                        if (Engine.Ticks - tick >= maxDelay)
+                        {
+                            return;
+                        }
 
-                   //     GameEntity chunkEntity = Contexts.SharedInstance.Game.CreateEntity();
+                        List<int> usedIndices = e.UsedIndices.UsedIndices;
+                        usedIndices.Add(cellindex);
+                        e.ReplaceUsedIndices(usedIndices);
 
-                       // chunk.Load(index);
-                   // }
+                        chunkEntity = Contexts.SharedInstance.Game.CreateEntity();
 
-                  //  chunk.LastAccessTime = Engine.Ticks;
+                        //LoadChunk(chunkEntity, index);
+                    }
+
+                    chunkEntity.ReplaceLastAccessTime(Engine.Ticks);
                 }
             }
         }

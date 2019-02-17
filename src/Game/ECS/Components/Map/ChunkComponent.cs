@@ -1,7 +1,7 @@
 ﻿using ClassicUO.Game.ECS;
 using Entitas;
 
-namespace ClassicUO.Game.ECS.Components
+namespace ClassicUO.Game.ECS
 {
     internal sealed class ChunkComponent : IComponent
     {
