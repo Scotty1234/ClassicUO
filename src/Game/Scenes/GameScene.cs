@@ -382,6 +382,7 @@ namespace ClassicUO.Game.Scenes
 
             UpdateMaxDrawZ();
             _renderListCount = 0;
+            _objectHandlesCount = 0;
 
             int minX = _minTile.X;
             int minY = _minTile.Y;
@@ -419,7 +420,7 @@ namespace ClassicUO.Game.Scenes
 
                         if (tile != null)
                         {
-                            AddTileToRenderList(tile.FirstNode, x, y, false, 150);
+                            AddTileToRenderList(tile.FirstNode, x, y, _useObjectHandles, 150);
                         }
                         x++;
                         y--;
