@@ -104,10 +104,11 @@
     <Compile Include="Game\ECS\Components\AlphaHueComponent.cs" />
     <Compile Include="Game\ECS\Components\BoundsComponent.cs" />
     <Compile Include="Game\ECS\Components\Chunk\LastAccessTimeComponent.cs" />
+    <Compile Include="Game\ECS\Components\Chunk\TilesComponent.cs" />
     <Compile Include="Game\ECS\Components\IdComponent.cs" />
     <Compile Include="Game\ECS\Components\Map\UsedIndicesComponent.cs" />
     <Compile Include="Game\ECS\Components\Tile\FirstNodeComponent.cs" />
-    <Compile Include="Game\ECS\Components\Map\ChunkComponent.cs" />
+    <Compile Include="Game\ECS\Components\Chunk\ChunkComponent.cs" />
     <Compile Include="Game\ECS\Components\DrawComponent.cs" />
     <Compile Include="Game\ECS\Components\DrawTransparentComponent.cs" />
     <Compile Include="Game\ECS\Components\FoliageComponent.cs" />

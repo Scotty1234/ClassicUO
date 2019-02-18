@@ -6,6 +6,16 @@ namespace ClassicUO.Game.ECS
     {
     }
 
+    internal partial class GameEntity
+    {
+        public void AddLand()
+        {
+            int index = GameComponentsLookup.Land;
+            var component = CreateComponent<LandComponent>(index);
+            AddComponent(index, component);
+        }
+    }
+
     internal sealed partial class GameMatcher
     {
         static IMatcher<GameEntity> _matcherLand;

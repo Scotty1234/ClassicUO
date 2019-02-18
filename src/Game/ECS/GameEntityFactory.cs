@@ -1,4 +1,7 @@
-﻿using ClassicUO.Game.ECS.Components;
+﻿using Microsoft.Xna.Framework;
+
+using ClassicUO.Game.ECS.Components;
+using ClassicUO.Renderer;
 
 namespace ClassicUO.Game.ECS
 {
@@ -6,58 +9,48 @@ namespace ClassicUO.Game.ECS
     {
         public static GameEntity CreateChunkEntity(ushort x, ushort y)
         {
-            GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
+            GameEntity chunkEntity = Contexts.SharedInstance.Game.CreateEntity();
+            chunkEntity.AddChunk();
+            chunkEntity.AddPosition2D(x, y);
 
-            ChunkComponent chunkComponent = e.CreateComponent<ChunkComponent>(GameComponentsLookup.Chunk);
-            //chunkComponent.Tiles = new int[8, 8];
+            int[,] TileEntities = new int[8, 8];
 
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    for (int j = 0; j < 8; j++)
-            //    {
-            //        chunkComponent.Tiles[i, j] = CreateTileEntity((ushort)(x + i), (ushort)(y + j)).;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    TileEntities[i, j] = CreateTileEntity((ushort)(x + i), (ushort)(y + j)).Id.Value;
 
-            //    }
-            //}
+                }
+            }
 
-            e.AddComponent(GameComponentsLookup.Chunk, chunkComponent);
+            chunkEntity.AddTiles(TileEntities);
+            chunkEntity.AddLastAccessTime(Engine.Ticks + Constants.CLEAR_TEXTURES_DELAY);
 
-            Position2DComponent position2DComponent = e.CreateComponent<Position2DComponent>(GameComponentsLookup.Position2D);
-            position2DComponent.X = x;
-            position2DComponent.Y = y;
-            e.AddComponent(GameComponentsLookup.Position2D, position2DComponent);
-
-            return e;
+            return chunkEntity;
         }
 
         public static GameEntity CreateLandEntity(Graphic graphic, sbyte height)
         {
-            GameEntity e = CreateBaseGameObjectEntity();
+            GameEntity landEntity = CreateBaseGameObjectEntity();
 
-            e.CreateComponent<LandComponent>(GameComponentsLookup.Land);
+            landEntity.AddHeight(height, height);
+            landEntity.AddLand();
+            landEntity.AddNormals(new Vector3[4]);
+            landEntity.AddStretched();
+            landEntity.AddTileData(null);
+            landEntity.AddVertices(new SpriteVertex[4]);
 
-            e.CreateComponent<NormalsComponent>(GameComponentsLookup.Normals);
-            e.CreateComponent<StretchedComponent>(GameComponentsLookup.Stretched);
-            e.CreateComponent<TileDataComponent>(GameComponentsLookup.TileData);
-            e.CreateComponent<VerticesComponent>(GameComponentsLookup.Vertices);
+            landEntity.ReplaceGraphic(graphic);
 
-            GraphicComponent graphicComponent = e.GetComponent(GameComponentsLookup.Graphic) as GraphicComponent;
-            graphicComponent.Graphic = graphic;
-
-            if (graphicComponent.Graphic <= 2)
+            if (graphic <= 2)
             {
-                e.RemoveComponent(GameComponentsLookup.Draw);
+                landEntity.RemoveComponent(GameComponentsLookup.Draw);
             }
 
-            AlphaHueComponent alphaHueComponent = e.GetComponent(GameComponentsLookup.AlphaHue) as AlphaHueComponent;
-            alphaHueComponent.AlphaHue = 255;
+            landEntity.ReplaceAlphaHue(255);
 
-            HeightComponent heightComponent = e.CreateComponent<HeightComponent>(GameComponentsLookup.Height);
-            heightComponent.Average = height;
-            heightComponent.Minimum = height;
-
-
-            return e;
+            return landEntity;
         }
 
         public static GameEntity CreateMobileEntity()
@@ -76,27 +69,22 @@ namespace ClassicUO.Game.ECS
 
         public static GameEntity CreateStaticEntity(Graphic graphic, Hue hue, int index)
         {
-            GameEntity e = CreateBaseGameObjectEntity();
+            GameEntity staticEntity = CreateBaseGameObjectEntity();
 
-            e.ReplaceGraphic(graphic);
+            staticEntity.ReplaceGraphic(graphic);
+            staticEntity.ReplaceHue(hue);
 
-            HueComponent hueComponent = e.GetComponent(GameComponentsLookup.Hue) as HueComponent;
-            hueComponent.Hue = hue;
-
-            return e;
+            return staticEntity;
         }
 
         public static GameEntity CreateTileEntity(ushort x, ushort y)
         {
-            GameEntity e = Contexts.SharedInstance.Game.CreateEntity();
+            GameEntity TileEntity = Contexts.SharedInstance.Game.CreateEntity();
 
-            Position2DComponent position2DComponent = e.CreateComponent<Position2DComponent>(GameComponentsLookup.Position2D);
-            position2DComponent.X = x;
-            position2DComponent.Y = y;
-
-            e.AddComponent(GameComponentsLookup.Position2D, position2DComponent);
-
-            return e;
+            TileEntity.AddPosition2D(x, y);
+            TileEntity.AddTile();
+           
+            return TileEntity;
         }
 
         private static GameEntity CreateBaseGameObjectEntity()

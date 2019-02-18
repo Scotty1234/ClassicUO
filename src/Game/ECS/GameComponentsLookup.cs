@@ -35,6 +35,7 @@ namespace ClassicUO.Game.ECS
         public const int Stretched = -1;
         public const int Texture = -1;
         public const int Tile = -1;
+        public const int Tiles = -1;
         public const int TileData = -1;
         public const int UsedIndices = -1;
         public const int Vertices = -1;

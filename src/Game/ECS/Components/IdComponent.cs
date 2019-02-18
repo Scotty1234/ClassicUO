@@ -7,6 +7,17 @@ namespace ClassicUO.Game.ECS
         public int Value;
     }
 
+    internal partial class GameEntity
+    {
+        public IdComponent Id
+        {
+            get
+            {
+                return (GetComponent(GameComponentsLookup.Id) as IdComponent);
+            }
+        }
+    }
+
     internal sealed partial class GameMatcher
     {
         static IMatcher<GameEntity> _matcherId;
