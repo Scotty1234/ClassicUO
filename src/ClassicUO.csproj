@@ -107,11 +107,15 @@
     <Compile Include="Game\ECS\Components\Chunk\TilesComponent.cs" />
     <Compile Include="Game\ECS\Components\IdComponent.cs" />
     <Compile Include="Game\ECS\Components\Map\UsedIndicesComponent.cs" />
+    <Compile Include="Game\ECS\Components\Mobile\CharacterSpeedComponent.cs" />
+    <Compile Include="Game\ECS\Components\Mobile\DeadComponent.cs" />
+    <Compile Include="Game\ECS\Components\Mobile\RaceComponent.cs" />
+    <Compile Include="Game\ECS\Components\Static\StaticComponent.cs" />
     <Compile Include="Game\ECS\Components\Tile\FirstNodeComponent.cs" />
     <Compile Include="Game\ECS\Components\Chunk\ChunkComponent.cs" />
     <Compile Include="Game\ECS\Components\DrawComponent.cs" />
     <Compile Include="Game\ECS\Components\DrawTransparentComponent.cs" />
-    <Compile Include="Game\ECS\Components\FoliageComponent.cs" />
+    <Compile Include="Game\ECS\Components\Static\FoliageComponent.cs" />
     <Compile Include="Game\ECS\Components\GraphicComponent.cs" />
     <Compile Include="Game\ECS\Components\Land\HeightComponent.cs" />
     <Compile Include="Game\ECS\Components\IndexComponent.cs" />

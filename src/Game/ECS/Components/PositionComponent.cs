@@ -4,9 +4,7 @@ namespace ClassicUO.Game.ECS
 {
     internal sealed class PositionComponent : IComponent
     {
-        public ushort   X;
-        public ushort   Y;
-        public sbyte    Z;
+        public Position Value;
     }
 
     internal sealed partial class GameEntity
@@ -21,6 +19,14 @@ namespace ClassicUO.Game.ECS
             {
                 ReplaceComponent(GameComponentsLookup.Position, value);
             }
+        }
+
+        public void ReplacePosition(Position position)
+        {
+            int index = GameComponentsLookup.Position;
+            var component = CreateComponent<PositionComponent>(index);
+            component.Value = position;
+            ReplaceComponent(index, component);
         }
 
     }

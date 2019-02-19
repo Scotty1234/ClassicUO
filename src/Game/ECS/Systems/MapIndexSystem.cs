@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 using ClassicUO.IO;
 using ClassicUO.Game.Map;
+using ClassicUO.IO.Resources;
 
 namespace ClassicUO.Game.ECS
 {
@@ -34,7 +35,7 @@ namespace ClassicUO.Game.ECS
             if (worldEntity.HasMap)
             {
 
-                worldEntity.ReplaceCenter(new Point(position.X, position.Y));
+                worldEntity.ReplaceCenter(new Point(position.Value.X, position.Value.Y));
                 Initialise(worldEntity);
 
                 // AddToTile
@@ -47,7 +48,7 @@ namespace ClassicUO.Game.ECS
 
                 if (playerEntity != null)
                 {
-                    worldEntity.ReplaceCenter(new Point(position.X, position.Y));
+                    worldEntity.ReplaceCenter(new Point(position.Value.X, position.Value.Y));
                 }
 
                 Initialise(worldEntity);
@@ -118,14 +119,83 @@ namespace ClassicUO.Game.ECS
                         usedIndices.Add(cellindex);
                         e.ReplaceUsedIndices(usedIndices);
 
-                        chunkEntity = Contexts.SharedInstance.Game.CreateEntity();
-
-                        //LoadChunk(chunkEntity, index);
+                        chunkEntity = GameEntityFactory.CreateChunkEntity((ushort)i, (ushort)j);
+                        LoadMap(chunkEntity, e.MapIndex.Value);
                     }
 
                     chunkEntity.ReplaceLastAccessTime(Engine.Ticks);
                 }
             }
         }
+
+        private unsafe void LoadMap(GameEntity chunkEntity, int map)
+        {
+            //IndexMap im = GetIndex(map);
+
+            //if (im.MapAddress != 0)
+            //{
+
+
+            //    MapBlock* block = (MapBlock*)im.MapAddress;
+            //    MapCells* cells = (MapCells*)&block->Cells;
+            //    //int bx = chunkEntity.Position2D.X * 8;
+            //    //int by = chunkEntity.Position2D.Y * 8;
+
+            //    for (int x = 0; x < 8; x++)
+            //    {
+            //        for (int y = 0; y < 8; y++)
+            //        {
+            //            int pos = y * 8 + x;
+            //            ushort tileID = (ushort)(cells[pos].TileID & 0x3FFF);
+            //            sbyte z = cells[pos].Z;
+
+            //            GameEntity landEntity = GameEntityFactory.CreateLandEntity(tileID, z);
+
+            //            ushort tileX = (ushort)(bx + x);
+            //            ushort tileY = (ushort)(by + y);
+
+            //            //land.Calculate(tileX, tileY, z);
+            //            //land.Position = new Position(tileX, tileY, z);
+
+            //            //land.AddToTile(Tiles[x, y]);
+            //        }
+            //    }
+
+            //    if (im.StaticAddress != 0)
+            //    {
+            //        StaticsBlock* sb = (StaticsBlock*)im.StaticAddress;
+
+            //        if (sb != null)
+            //        {
+            //            int count = (int)im.StaticCount;
+
+            //            for (int i = 0; i < count; i++, sb++)
+            //            {
+            //                if (sb->Color != 0 && sb->Color != 0xFFFF)
+            //                {
+            //                    ushort x = sb->X;
+            //                    ushort y = sb->Y;
+            //                    int pos = y * 8 + x;
+
+            //                    if (pos >= 64)
+            //                        continue;
+            //                    sbyte z = sb->Z;
+
+            //                    ushort staticX = (ushort)(bx + x);
+            //                    ushort staticY = (ushort)(by + y);
+
+            //                    GameEntity staticEntity = GameEntityFactory.CreateStaticEntity(sb->Color, sb->Hue, pos);
+            //                    staticEntity.ReplacePosition(new Position(staticX, staticY, z));
+
+            //                    //if (staticObject.ItemData.IsAnimated)
+            //                    //    World.AddEffect(new AnimatedItemEffect(staticObject, staticObject.Graphic, staticObject.Hue, -1));
+            //                    //else
+            //                    //    staticObject.AddToTile(Tiles[x, y]);
+            //                }
+            //            }
+            //        }
+            //    }
+
+            }
     }
 }
